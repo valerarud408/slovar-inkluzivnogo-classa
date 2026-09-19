@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Словарь инклюзивного класса</title>
+<style>
+  :root{
+    --ink:#183b73;
+    --muted:#5f6f86;
+    --paper:#fffdf8;
+    --line:#e8e4dc;
+    --green:#35b77a;
+    --yellow:#ffd45c;
+    --purple:#a983e8;
+    --blue:#55bce9;
+    --pink:#ff7198;
+    --orange:#ffad62;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: Inter, ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 5%, #fff0a8 0 90px, transparent 91px),
+      radial-gradient(circle at 95% 10%, #cceeff 0 120px, transparent 121px),
+      #f7f8fb;
+  }
+  .container{width:min(1180px,92%);margin:auto}
+  header{
+    padding:28px 0 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:20px;margin-bottom:58px;
+  }
+  .brand{font-weight:900;font-size:20px;letter-spacing:-.4px}
+  .nav-btn{
+    text-decoration:none;color:var(--ink);font-weight:800;
+    background:#fff;border:2px solid var(--line);padding:11px 18px;border-radius:999px;
+  }
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;background:#fff;
+    padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px;
+    box-shadow:0 8px 30px #20385d12;
+  }
+  h1{font-size:clamp(46px,7vw,86px);line-height:.95;margin:18px 0;color:#16408a;letter-spacing:-4px}
+  .hero p{font-size:20px;line-height:1.55;color:var(--muted);max-width:650px}
+  .cta{
+    display:inline-block;margin-top:18px;padding:15px 24px;border-radius:18px;
+    background:#16408a;color:#fff;text-decoration:none;font-weight:900;
+    box-shadow:0 12px 25px #16408a2b;
+  }
+  .hero-art{
+    min-height:330px;position:relative;display:grid;place-items:center;
+  }
+  .bubble{
+    position:absolute;background:#fff;border-radius:28px;padding:16px 20px;
+    font-weight:900;box-shadow:0 15px 35px #20385d18;
+  }
+  .b1{top:10px;right:0;transform:rotate(5deg)}
+  .b2{bottom:15px;left:0;transform:rotate(-6deg)}
+  .puzzle{font-size:150px;filter:drop-shadow(0 20px 15px #183b7320)}
+  section{padding:70px 0}
+  .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:28px}
+  .section-head h2{font-size:42px;margin:0;letter-spacing:-1.5px}
+  .section-head p{max-width:530px;color:var(--muted);line-height:1.5;margin:0}
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+  .filter{
+    border:0;background:#fff;color:var(--ink);padding:10px 15px;border-radius:999px;
+    font-weight:800;cursor:pointer;box-shadow:0 5px 18px #20385d10;
+  }
+  .filter.active{background:#16408a;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .card{
+    min-height:330px;border-radius:28px;padding:22px;position:relative;overflow:hidden;
+    background:#fff;border:3px solid var(--accent);box-shadow:0 14px 30px #20385d12;
+    cursor:pointer;transition:.2s transform,.2s box-shadow;
+  }
+  .card:hover{transform:translateY(-5px);box-shadow:0 20px 38px #20385d20}
+  .num{
+    width:34px;height:34px;border-radius:50%;background:var(--accent);
+    color:#fff;display:grid;place-items:center;font-weight:900;
+  }
+  .icon{font-size:54px;margin:22px 0 8px}
+  .card h3{font-size:25px;margin:0 0 10px;line-height:1.05}
+  .tagline{font-weight:800;color:#49627f;line-height:1.35}
+  .hint{position:absolute;bottom:18px;left:22px;font-size:12px;font-weight:900;color:#7b8798}
+  .info{
+    background:#fff;border-radius:34px;padding:42px;
+    display:grid;grid-template-columns:1fr 1fr;gap:35px;
+    box-shadow:0 18px 45px #20385d12;
+  }
+  .info h2{font-size:38px;margin:0 0 12px}
+  .info p{color:var(--muted);line-height:1.65}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+  .pillar{padding:20px;border-radius:22px;background:#f6f8fc}
+  .pillar b{display:block;margin-bottom:6px}
+  footer{padding:55px 0 70px}
+  .footer-box{
+    border-radius:35px;background:#16408a;color:white;padding:42px;
+    display:flex;justify-content:space-between;align-items:center;gap:25px;
+  }
+  .footer-box h2{margin:0;font-size:34px}
+  .footer-box p{margin:8px 0 0;opacity:.86}
+  .modal{
+    position:fixed;inset:0;background:#14233c99;display:none;align-items:center;justify-content:center;
+    padding:18px;z-index:20;
+  }
+  .modal.open{display:flex}
+  .modal-box{
+    width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:32px;
+    padding:30px;border-top:10px solid var(--accent);
+  }
+  .close{float:right;border:0;background:#f0f3f8;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer}
+  .modal h2{font-size:34px;margin:5px 55px 25px 0}
+  .block{padding:18px 20px;border-radius:20px;background:#f7f9fc;margin:12px 0}
+  .block h4{margin:0 0 7px;font-size:15px;text-transform:uppercase;letter-spacing:.5px}
+  .block p,.block li{color:#4f6077;line-height:1.55}
+  .block ul{margin:7px 0 0;padding-left:22px}
+  .remember{background:#fff5c9}
+  @media(max-width:900px){.hero,.info{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){
+    nav{margin-bottom:35px}.hero-art{min-height:220px}.puzzle{font-size:100px}
+    .grid{grid-template-columns:1fr}.section-head{display:block}.section-head h2{font-size:34px;margin-bottom:10px}
+    .info{padding:25px}.pillars{grid-template-columns:1fr}.footer-box{display:block}.footer-box h2{font-size:28px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <div class="brand">🌈 Словарь инклюзивного класса</div>
+      <a class="nav-btn" href="#cards">Карточки</a>
+    </nav>
+    <div class="hero">
+      <div>
+        <span class="eyebrow">💛 Узнавать • понимать • поддерживать</span>
+        <h1>Мы разные —<br>и это здорово!</h1>
+        <p>Интерактивный словарь, который простыми словами рассказывает об особенностях человека и помогает понять, как сделать общение в классе комфортнее для всех.</p>
+        <a class="cta" href="#cards">Открыть карточки →</a>
+      </div>
+      <div class="hero-art">
+        <div class="bubble b1">🤝 Поддерживать</div>
+        <div class="puzzle">🧩</div>
+        <div class="bubble b2">💬 Понимать</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="cards">
+  <div class="container">
+    <div class="section-head">
+      <h2>Познакомимся?</h2>
+      <p>Нажмите на карточку, чтобы узнать, что это за особенность, какие ситуации могут быть сложными и как можно поддержать человека.</p>
+    </div>
+    <div class="filters">
+      <button class="filter active" data-filter="all">Все</button>
+      <button class="filter" data-filter="speech">Речь</button>
+      <button class="filter" data-filter="learning">Обучение</button>
+      <button class="filter" data-filter="sensory">Сенсорика</button>
+      <button class="filter" data-filter="development">Развитие и движение</button>
+    </div>
+    <div class="grid" id="cardGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="info">
+      <div>
+        <h2>Зачем нужен этот словарь?</h2>
+        <p>Инклюзия начинается не только с доступной среды. Она начинается с понимания. Ребёнку бывает трудно догадаться, почему однокласснику нужно больше времени, тише место, другой способ получения информации или помощь в движении.</p>
+        <p>Карточки помогают говорить об этих различиях спокойно, уважительно и без стереотипов.</p>
+      </div>
+      <div>
+        <div class="pillars">
+          <div class="pillar">🧠<b>Узнать</b><span>простое объяснение особенности</span></div>
+          <div class="pillar">🔎<b>Понять</b><span>возможные трудности в школе</span></div>
+          <div class="pillar">🤝<b>Поддержать</b><span>конкретные способы общения</span></div>
+        </div>
+        <p><strong>Главный принцип:</strong> человек не сводится к диагнозу. У каждого есть свои интересы, сильные стороны, возможности и потребности.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-box">
+      <div>
+        <h2>Словарь понимания 💛</h2>
+        <p>Знать об особенностях — значит уметь быть рядом.</p>
+      </div>
+      <div style="font-size:42px">♡ &nbsp; 👥 &nbsp; ☆</div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box" id="modalBox">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2 id="mTitle"></h2>
+    <div class="block"><h4>🧠 Что это?</h4><p id="mWhat"></p></div>
+    <div class="block"><h4>🔎 С чем может быть сложно?</h4><p id="mHard"></p></div>
+    <div class="block"><h4>🤝 Как можно помочь?</h4><ul id="mHelp"></ul></div>
+    <div class="block remember"><h4>💛 Важно помнить</h4><p id="mRemember"></p></div>
+  </div>
+</div>
+
+<script>
+const data = [
+ {title:"Тяжёлые нарушения речи (ТНР)", icon:"💬", color:"#a983e8", cat:"speech",
+  tagline:"Когда словам бывает трудно найти дорогу",
+  what:"Тяжёлые нарушения речи (ТНР) — группа речевых нарушений, при которых могут возникать значительные трудности с произношением, пониманием или построением речи.",
+  hard:"Ребёнку может быть трудно быстро подобрать слово, сформулировать ответ, произнести звуки или построить предложение. Иногда ему требуется больше времени для общения.",
+  help:["Дай время подумать и ответить.","Не договаривай каждую фразу.","Если не понял — спокойно переспроси.","Поддерживай участие ребёнка в общей беседе."],
+  remember:"Если человек говорит медленнее или иначе, это не значит, что ему нечего сказать."},
+ {title:"Заикание", icon:"🗣️", color:"#ffd45c", cat:"speech",
+  tagline:"Когда говорить бывает непросто",
+  what:"Заикание — особенность плавности речи. Человеку может быть трудно начать слово, повторить звук или произнести фразу плавно.",
+  hard:"Иногда требуется больше времени, чтобы выразить мысль. Особенно непросто может быть отвечать перед классом или говорить в непривычной обстановке.",
+  help:["Спокойно выслушай собеседника.","Не заканчивай фразу за него.","Не торопи.","Слушай, что человек хочет сказать."],
+  remember:"Заикание не означает, что человек не знает ответа или не умеет хорошо думать."},
+ {title:"Дислексия", icon:"📖", color:"#55bce9", cat:"learning",
+  tagline:"Когда чтение требует больше усилий",
+  what:"Дислексия — особенность освоения навыков чтения. Человеку может быть трудно быстро и точно распознавать слова и обрабатывать письменную информацию.",
+  hard:"Чтение вслух, понимание длинного текста и выполнение больших письменных заданий могут требовать больше времени и усилий.",
+  help:["Дай дополнительное время.","Используй понятные и короткие инструкции.","При необходимости предложи прочитать задание вместе.","Не высмеивай ошибки при чтении."],
+  remember:"Трудности с чтением не говорят об интеллекте человека."},
+ {title:"РАС", icon:"🧩", color:"#35b77a", cat:"development",
+  tagline:"Когда мир может восприниматься иначе",
+  what:"Расстройство аутистического спектра — особенность развития, которая может влиять на социальное взаимодействие, коммуникацию, интересы и восприятие окружающего мира.",
+  hard:"Шум, яркий свет, большое количество людей или неожиданные изменения привычного порядка могут вызывать дискомфорт. Некоторым детям бывает трудно быстро понять намёки или правила общения.",
+  help:["Предупреждай о важных изменениях.","Говори понятно и конкретно.","Уважай личное пространство.","Не заставляй человека смотреть в глаза или общаться, если ему это трудно."],
+  remember:"Люди с РАС очень разные. Одна особенность не описывает человека целиком."},
+ {title:"СДВГ", icon:"⚡", color:"#ffad62", cat:"development",
+  tagline:"Когда удерживать внимание бывает сложнее",
+  what:"СДВГ — нейроразвивающееся состояние, которое может влиять на внимание, импульсивность и уровень активности.",
+  hard:"Человеку может быть трудно долго сидеть без движения, не отвлекаться во время большого задания, дождаться своей очереди или удерживать внимание на неинтересной задаче.",
+  help:["Разделяй большие задания на небольшие шаги.","Давай короткие и понятные инструкции.","Предусматривай безопасные двигательные паузы.","Не воспринимай каждую ошибку как намеренное непослушание."],
+  remember:"Невнимательность или повышенная активность не означают, что человек специально хочет кому-то мешать."},
+ {title:"Нарушение слуха", icon:"👂", color:"#ff7198", cat:"sensory",
+  tagline:"Когда услышать — не всегда значит понять всё",
+  what:"Нарушение слуха может быть разной степени. Одному человеку может быть достаточно громкой и чёткой речи, а другому могут понадобиться слуховые аппараты, жестовый язык или другие способы общения.",
+  hard:"Особенно трудно понимать речь в шумном помещении, услышать обращение с другого конца класса или разобрать слова, если говорящий отвернулся.",
+  help:["Сначала привлеки внимание.","Говори лицом к человеку.","Не кричи.","При необходимости используй письменную или визуальную информацию.","Уточни, какой способ общения удобен собеседнику."],
+  remember:"Если человек не ответил сразу, возможно, он просто не услышал обращение."},
+ {title:"Нарушение зрения", icon:"👁️", color:"#55bce9", cat:"sensory",
+  tagline:"Когда окружающий мир можно воспринимать по-разному",
+  what:"Нарушение зрения — состояние, при котором зрение может быть снижено или отсутствовать полностью. Степень и особенности нарушения у разных людей различаются.",
+  hard:"Может быть трудно прочитать мелкий текст, рассмотреть изображение, найти нужный предмет или безопасно ориентироваться в незнакомом пространстве.",
+  help:["Описывай словами то, что показываешь.","Не переставляй вещи без предупреждения.","Предлагай помощь, но не настаивай.","Используй доступные форматы: крупный шрифт, аудио и другие подходящие средства."],
+  remember:"Не каждый человек с нарушением зрения полностью незрячий. У каждого могут быть свои способы воспринимать информацию."},
+ {title:"ДЦП", icon:"🦽", color:"#35b77a", cat:"development",
+  tagline:"Когда движение требует больше усилий",
+  what:"Детский церебральный паралич — группа состояний, связанных с нарушением развития или повреждением развивающегося мозга. Они могут влиять на движение, равновесие и координацию.",
+  hard:"Человеку может быть трудно ходить, удерживать равновесие, пользоваться руками или выполнять некоторые действия быстро. Иногда могут встречаться особенности речи или утомляемость.",
+  help:["Не торопи человека.","Освобождай проходы и обеспечивай доступное пространство.","Предлагай помощь, предварительно спросив.","Поддерживай участие ребёнка в общей деятельности."],
+  remember:"ДЦП не определяет способности, интересы и личность человека. У каждого ребёнка свои возможности и потребности."}
+];
+
+const grid=document.getElementById("cardGrid");
+function render(filter="all"){
+  grid.innerHTML="";
+  data.filter(x=>filter==="all"||x.cat===filter).forEach((x,i)=>{
+    const el=document.createElement("article");
+    el.className="card"; el.style.setProperty("--accent",x.color);
+    el.innerHTML=`<div class="num">${i+1}</div><div class="icon">${x.icon}</div><h3>${x.title}</h3><div class="tagline">${x.tagline}</div><div class="hint">НАЖМИ, ЧТОБЫ УЗНАТЬ БОЛЬШЕ →</div>`;
+    el.onclick=()=>openModal(x);
+    grid.appendChild(el);
+  });
+}
+function openModal(x){
+  document.getElementById("modalBox").style.setProperty("--accent",x.color);
+  document.getElementById("mTitle").textContent=x.icon+"  "+x.title;
+  document.getElementById("mWhat").textContent=x.what;
+  document.getElementById("mHard").textContent=x.hard;
+  document.getElementById("mHelp").innerHTML=x.help.map(h=>`<li>${h}</li>`).join("");
+  document.getElementById("mRemember").textContent=x.remember;
+  document.getElementById("modal").classList.add("open");
+}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+document.querySelectorAll(".filter").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active"); render(btn.dataset.filter);
+  }
+});
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+render();
+</script>
+</body>
+</html>
